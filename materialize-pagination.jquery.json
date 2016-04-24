@@ -11,21 +11,21 @@
         "materialize.scss",
         "material-design"
     ],
-    "version": "0.1.0",
+    "version": "0.1.2",
     "author": {
-        "name": "Mirjam Skarica"
+        "name": "Mirjam Skarica",
+        "url": "https://github.com/mirjamsk"
     },
-
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://raw.githubusercontent.com/mirjamsk/materialize-pagination/master/LICENSE"
+            "url": "http://www.opensource.org/licenses/mit-license.php"
         }
     ],
     "bugs": "https://github.com/mirjamsk/materialize-pagination/issues",
     "homepage": "https://github.com/mirjamsk/materialize-pagination",
-    "docs": "https://github.com/mirjamsk/materialize-pagination",
-    "download": "https://github.com/mirjamsk/materialize-pagination/releases/",
+    "docs": "https://github.com/mirjamsk/materialize-pagination#readme",
+    "download": "https://github.com/mirjamsk/materialize-pagination/archive/master.zip",
     "dependencies": {
         "jquery": ">=2.2",
         "materialize-css": ">=0.97.6"
