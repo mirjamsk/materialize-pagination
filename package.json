@@ -1,0 +1,36 @@
+{
+  "name": "materialize-pagination",
+  "title": "Materialize Pagination",
+  "description": "Materialize Pagination is a jQuery plugin that provides behavior and rendering of the Materialize Pagination component.",
+  "keywords": [
+    "page",
+    "pagination",
+    "materialize",
+    "materializecss",
+    "materialize.css",
+    "materialize.scss",
+    "material-design",
+    "jquery-plugin", 
+    "ecosystem:jquery"
+  ],
+  "version": "0.1.5",
+  "author": "Mirjam Skarica (https://github.com/mirjamsk)",
+  "bugs": {
+    "url": "https://github.com/mirjamsk/materialize-pagination/issues"
+  },
+  "homepage": "https://github.com/mirjamsk/materialize-pagination",
+  "dependencies": {
+    "jquery": ">=2.2",
+    "materialize-css": ">=0.97.6"
+  },
+  "main": "materialize-pagination.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mirjamsk/materialize-pagination.git"
+  },
+  "license": "MIT"
+}
