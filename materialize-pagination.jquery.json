@@ -25,7 +25,7 @@
     "bugs": "https://github.com/mirjamsk/materialize-pagination/issues",
     "homepage": "https://github.com/mirjamsk/materialize-pagination",
     "docs": "https://github.com/mirjamsk/materialize-pagination",
-    "download": "https://github.com/mirjamsk/materialize-pagination/releases/tag/0.1",
+    "download": "https://github.com/mirjamsk/materialize-pagination/releases/",
     "dependencies": {
         "jquery": ">=2.2",
         "materialize-css": ">=0.97.6"
