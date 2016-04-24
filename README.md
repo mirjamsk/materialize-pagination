@@ -1,4 +1,7 @@
 # Materialize Pagination
+
+![Pagination screenshot1](/../screenshots/screenshot2.png?raw=true)
+
 Materialize Pagination is a jQuery plugin that provides behaviour and  rendering of the [Materialize Pagination component][1].
 
 ### Getting stated
