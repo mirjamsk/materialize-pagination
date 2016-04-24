@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Materialize Pagination by mirjamsk</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Materialize Pagination</h1>
+        <p>Materialize Pagination is a jQuery plugin that provides behaviour and  rendering of the Materialize Pagination component</p>
+
+        <p class="view"><a href="https://github.com/mirjamsk/materialize-pagination">View the Project on GitHub <small>mirjamsk/materialize-pagination</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mirjamsk/materialize-pagination/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mirjamsk/materialize-pagination/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mirjamsk/materialize-pagination">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="materialize-pagination" class="anchor" href="#materialize-pagination" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Materialize Pagination</h1>
+
+<p><img src="/../screenshots/screenshot2.png?raw=true" alt="Pagination screenshot1"></p>
+
+<p>Materialize Pagination is a jQuery plugin that provides behaviour and  rendering of the <a href="http://materializecss.com/pagination.html">Materialize Pagination component</a>.</p>
+
+<h3>
+<a id="getting-stated" class="anchor" href="#getting-stated" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting stated</h3>
+
+<p>To get the Materialize Paginaton plugin working you first need to include <a href="https://jquery.com/">jQuery</a>, <a href="http://materializecss.com/getting-started.html">Materlize.css</a> and <a href="http://materializecss.com/icons.html">Materlize icons</a>. </p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>https://fonts.googleapis.com/icon?family=Material+Icons<span class="pl-pds">"</span></span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">link</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>css/materialize.min.css<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/css<span class="pl-pds">"</span></span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>materialize-paginaiton.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>Next invoke the function on your pagination container</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#pagination<span class="pl-pds">'</span></span>).<span class="pl-en">materializePagination</span>({ 
+    align<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>left<span class="pl-pds">'</span></span>,
+    lastPage<span class="pl-k">:</span>  <span class="pl-c1">10</span>,
+    firstPage<span class="pl-k">:</span>  <span class="pl-c1">1</span>,
+    urlParameter<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>page<span class="pl-pds">'</span></span>,
+    useUrlParameter<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    <span class="pl-en">onClickCallback</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">requestedPage</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Requested page is <span class="pl-pds">'</span></span><span class="pl-k">+</span> requestedPage);
+    }
+}); </pre></div>
+
+<h3>
+<a id="available-options" class="anchor" href="#available-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Available options</h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">Attribute</th>
+<th align="center">Type</th>
+<th align="center">Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">align</td>
+<td align="center">string</td>
+<td align="center">'center'</td>
+<td>Pagination alignment within its parent container. Possible options: <code>center</code>, <code>left</code> and  <code>right</code>
+</td>
+</tr>
+<tr>
+<td align="center">lastPage</td>
+<td align="center">int</td>
+<td align="center">1</td>
+<td>Int value of last page</td>
+</tr>
+<tr>
+<td align="center">firstPage</td>
+<td align="center">int</td>
+<td align="center">1</td>
+<td>Int value of first page</td>
+</tr>
+<tr>
+<td align="center">urlParameter</td>
+<td align="center">string</td>
+<td align="center">'page'</td>
+<td>The url parameter that indicates which page is currently open e.g. <code>/?page=2</code>
+</td>
+</tr>
+<tr>
+<td align="center">useUrlParameter</td>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td>If option is set to false, page navigation will not change the url and the  correspondigly the <code>urlParameter</code> is ignored</td>
+</tr>
+<tr>
+<td align="center">onClickCallback</td>
+<td align="center">function</td>
+<td align="center">{}</td>
+<td>Optional user defined function that is invoked every time a new page is requested i.e clicked. It recives the  <code>requestedParameter</code> containing the requested page number</td>
+</tr>
+</tbody>
+</table>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mirjamsk">mirjamsk</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
