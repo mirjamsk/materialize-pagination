@@ -42,7 +42,7 @@ Sample usage:
             // Combine defaults with user-specified options
             this.config = $.extend({}, this.defaults, this.options);
             // Get page defined by the urlParameter
-            var requestedPage =  this.config.useUrlParameter ?  this.parseUrl() : 1;
+            var requestedPage =  this.config.useUrlParameter ? this.parseUrl() : this.config.firstPage;
             // Create initial pagination and add it to the DOM
             if(this.createPaginationBase(requestedPage))
                 this.bindClickEvent();
