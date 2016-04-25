@@ -107,7 +107,7 @@ Sample usage:
             this.renderActivePage();
 
             if ( this.config.useUrlParameter )
-                window.history.pushState('', '', '?' + this.config.urlParameter + '=' + this.currentPage);
+                this.updateUrlParam(this.config.urlParameter, this.currentPage);  
         },
 
         requestPrevPage: function() {
@@ -207,7 +207,7 @@ Sample usage:
         },
 
         parseUrl: function(){
-            var requestedPage = this.getUrlParamByName(this.config.urlParameter) || 1;
+            var requestedPage = this.getUrlParamByName(this.config.urlParameter) || this.config.firstPage;
             return this.sanitizePageRequest(requestedPage);
         },
 
@@ -219,6 +219,25 @@ Sample usage:
             if (!results)  return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        },
+
+        updateUrlParam: function (key, value) {
+            var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
+                urlQueryString = document.location.search,
+                newParam = key + '=' + value,
+                params = '?' + newParam;
+
+            if (urlQueryString) { // If the "search" string exists, then build params from it
+                keyRegex = new RegExp('([\?&])' + key + '[^&]*');
+
+                if (urlQueryString.match(keyRegex) !== null) { // If param exists already, update it
+                    params = urlQueryString.replace(keyRegex, "$1" + newParam);
+                }
+                else { // Otherwise, add it to end of query string
+                    params = urlQueryString + '&' + newParam;
+                }
+            }
+            window.history.pushState('', '', params);
         },
 
         util: {

@@ -14,7 +14,7 @@
     "jquery-plugin",
     "ecosystem:jquery"
   ],
-  "version": "0.1.9",
+  "version": "0.1.10",
   "author": "Mirjam Skarica (https://github.com/mirjamsk)",
   "bugs": {
     "url": "https://github.com/mirjamsk/materialize-pagination/issues"
