@@ -6,28 +6,28 @@
     "page",
     "pagination",
     "materialize",
+    "materialize pagnation",
     "materializecss",
     "materialize.css",
     "materialize.scss",
-    "material-design",
-    "jquery-plugin", 
+    "material design",
+    "jquery-plugin",
     "ecosystem:jquery"
   ],
-  "version": "0.1.5",
+  "version": "0.1.9",
   "author": "Mirjam Skarica (https://github.com/mirjamsk)",
   "bugs": {
     "url": "https://github.com/mirjamsk/materialize-pagination/issues"
   },
-  "homepage": "https://github.com/mirjamsk/materialize-pagination",
+  "homepage": "http://mirjamsk.github.io/materialize-pagination/",
   "dependencies": {
-    "jquery": ">=2.2",
-    "materialize-css": ">=0.97.6"
+    "jquery": ">=2.1"
   },
+  "style": ".style/css/.*css",
   "main": "materialize-pagination.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/mirjamsk/materialize-pagination.git"

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Materialize pagination demo</title>
+    <link rel="stylesheet" href="style/css/main.css" />
+    <link rel="stylesheet" href="style/css/materialize.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="pagination-long"></div>
+        <div id="pagination-short"></div>
+    </div>
+
+    <script src="materialize-pagination.min.js"></script>
+    <script>
+    $(function() {
+        $(function() {
+            $('#pagination-short').materializePagination({
+                align: 'center',
+                lastPage: 3,
+                firstPage: 1,
+                useUrlParameter: false,
+            });
+
+            $('#pagination-long').materializePagination({
+                align: 'center',
+                lastPage: 10,
+                firstPage: 1,
+                useUrlParameter: false,
+                onClickCallback: function(requestedPage) {
+                    console.log('Requested page from #pagination-long: ' + requestedPage);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
