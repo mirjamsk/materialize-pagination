@@ -1,5 +1,5 @@
 /*
- materialize Pagination v0.2.0
+ materialize Pagination v0.2.1
  http://mirjamsk.github.io/materialize-pagination/
 
  Sample usage:
