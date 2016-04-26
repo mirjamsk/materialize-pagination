@@ -1,8 +1,8 @@
 /*
+ materialize Pagination v0.2.0
+ http://mirjamsk.github.io/materialize-pagination/
 
-jQuery Plugin for Materialize.css pagination component
-
-Sample usage:
+ Sample usage:
     $('#pagination').materializePagination({ 
         align: 'left',
         lastPage:  10,
@@ -12,8 +12,7 @@ Sample usage:
         onClickCallback: function(requestedPage){
             console.log('Requested page is '+ requestedPage)
         }
-    }); 
-    
+    });  
 */
 ;(function($, window, document, undefined) {
 
