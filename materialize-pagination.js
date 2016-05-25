@@ -1,5 +1,5 @@
 /*
- materialize Pagination v0.2.1
+ materialize Pagination v0.2.2
  http://mirjamsk.github.io/materialize-pagination/
 
  Sample usage:
@@ -261,7 +261,7 @@
             Ellipsis: function() {
                 var $ellipsis = $('<li>');
                     $ellipsis.text('...');
-                    $ellipsis.addClass('hide');
+                    $ellipsis.addClass('hide disabled');
                 return {
                     $elem: $ellipsis,
                     isHidden:   true,
