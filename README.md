@@ -6,5 +6,6 @@
 
 Materialize Pagination is a jQuery plugin that provides behaviour and  rendering of the [Materialize Pagination component][1].
 
-**See [official page] (http://mirjamsk.github.io/materialize-pagination/) containing a demo & getting started guide**
-[1]: http://materializecss.com/pagination.html
+Compatible materialize v0.100 and jQuery 3. Answers the two open issues on the original repository.
+
+Fork on the mirjamsk depot https://mirjamsk.github.io/materialize-pagination/

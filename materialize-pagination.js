@@ -14,16 +14,17 @@
         }
     });  
 */
-;(function($, window, document, undefined) {
+;
+(function($, window, document, undefined) {
 
     var MaterializePagination = function(elem, options) {
-        this.$elem   = $(elem);
+        this.$elem = $(elem);
         this.options = options;
-        this.$container    = null;
+        this.$container = null;
         this.$prevEllipsis = null;
         this.$nextEllipsis = null;
-        this.currentPage   = null;
-        this.visiblePages  = [];
+        this.currentPage = null;
+        this.visiblePages = [];
         this.maxVisiblePages = 3;
     };
 
@@ -34,25 +35,24 @@
             firstPage: 1,
             urlParameter: 'page',
             useUrlParameter: true,
-            onClickCallback: function(){}
+            onClickCallback: function() {}
         },
 
         init: function() {
             // Combine defaults with user-specified options
             this.config = $.extend({}, this.defaults, this.options);
             // Get page defined by the urlParameter
-            var requestedPage =  this.config.useUrlParameter ? this.parseUrl() : this.config.firstPage;
+            var requestedPage = this.config.useUrlParameter ? this.parseUrl() : this.config.firstPage;
             // Create initial pagination and add it to the DOM
-            if(this.createPaginationBase(requestedPage))
+            if (this.createPaginationBase(requestedPage))
                 this.bindClickEvent();
         },
 
         createPaginationBase: function(requestedPage) {
-            if (isNaN(this.config.firstPage) || isNaN(this.config.lastPage) ){
+            if (isNaN(this.config.firstPage) || isNaN(this.config.lastPage)) {
                 console.error('Both firstPage and lastPage attributes need to be integer values');
                 return false;
-            }
-            else if (this.config.firstPage > this.config.lastPage ){
+            } else if (this.config.firstPage > this.config.lastPage) {
                 console.error('Value of firstPage must be less than the value of lastPage');
                 return false;
             }
@@ -67,7 +67,7 @@
             this.$prevEllipsis = this.util.Ellipsis();
             this.$nextEllipsis = this.util.Ellipsis();
 
-            var $firstPage   = this.util.createPage(this.config.firstPage);
+            var $firstPage = this.util.createPage(this.config.firstPage);
             var $prevChevron = this.util.createChevron('prev');
             var $nextChevron = this.util.createChevron('next');
 
@@ -83,13 +83,13 @@
                 $lastPage.insertBefore($nextChevron);
             }
 
-            this.requestPage(requestedPage);
+            this.requestPage(requestedPage, true);
             this.renderActivePage();
             this.$elem.append(this.$container);
             return true;
         },
 
-        requestPage: function(requestedPage){
+        requestPage: function(requestedPage, initing) {
             switch (requestedPage) {
                 case this.currentPage:
                     return;
@@ -102,11 +102,12 @@
                 default:
                     this.requestPageByNumber(requestedPage);
             }
-            this.config.onClickCallback(this.currentPage);
+            if (!initing)
+                this.config.onClickCallback(this.currentPage);
             this.renderActivePage();
 
-            if ( this.config.useUrlParameter )
-                this.updateUrlParam(this.config.urlParameter, this.currentPage);  
+            if (this.config.useUrlParameter)
+                this.updateUrlParam(this.config.urlParameter, this.currentPage);
         },
 
         requestPrevPage: function() {
@@ -133,23 +134,23 @@
             this.renderEllipsis();
             this.$container.find('li.active').removeClass('active');
             var currentPageComponent = $(this.$container.find('[data-page="' + this.currentPage + '"]')[0]);
-                currentPageComponent.addClass('active');
+            currentPageComponent.addClass('active');
         },
 
         renderEllipsis: function() {
-            if (this.$prevEllipsis.isHidden && 
+            if (this.$prevEllipsis.isHidden &&
                 this.currentPage >= this.config.firstPage + this.maxVisiblePages)
                 this.$prevEllipsis.show();
-            
-            else if (!this.$prevEllipsis.isHidden && 
+
+            else if (!this.$prevEllipsis.isHidden &&
                 this.currentPage <= this.config.firstPage + this.maxVisiblePages - 1)
                 this.$prevEllipsis.hide();
 
-            if (this.$nextEllipsis.isHidden && 
+            if (this.$nextEllipsis.isHidden &&
                 this.currentPage <= this.config.lastPage - this.maxVisiblePages)
                 this.$nextEllipsis.show();
-            
-            else if (!this.$nextEllipsis.isHidden && 
+
+            else if (!this.$nextEllipsis.isHidden &&
                 this.currentPage >= this.config.lastPage - this.maxVisiblePages + 1)
                 this.$nextEllipsis.hide();
         },
@@ -185,13 +186,11 @@
                 requestedPage =
                     this.currentPage === this.config.firstPage ?
                     this.currentPage : this.currentPage - 1;
-            }
-            else if (pageData === 'next') {
+            } else if (pageData === 'next') {
                 requestedPage =
                     this.currentPage === this.config.lastPage ?
                     this.currentPage : this.currentPage + 1;
-            }
-            else if (!isNaN(pageData) &&
+            } else if (!isNaN(pageData) &&
                 pageData >= this.config.firstPage &&
                 pageData <= this.config.lastPage) {
                 requestedPage = parseInt(pageData);
@@ -205,7 +204,7 @@
                 this.visiblePages.pop().remove();
         },
 
-        parseUrl: function(){
+        parseUrl: function() {
             var requestedPage = this.getUrlParamByName(this.config.urlParameter) || this.config.firstPage;
             return this.sanitizePageRequest(requestedPage);
         },
@@ -215,12 +214,12 @@
             var url = window.location.href;
             var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
             var results = regex.exec(url);
-            if (!results)  return null;
+            if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
 
-        updateUrlParam: function (key, value) {
+        updateUrlParam: function(key, value) {
             var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
                 urlQueryString = document.location.search,
                 newParam = key + '=' + value,
@@ -231,8 +230,7 @@
 
                 if (urlQueryString.match(keyRegex) !== null) { // If param exists already, update it
                     params = urlQueryString.replace(keyRegex, "$1" + newParam);
-                }
-                else { // Otherwise, add it to end of query string
+                } else { // Otherwise, add it to end of query string
                     params = urlQueryString + '&' + newParam;
                 }
             }
@@ -240,37 +238,39 @@
         },
 
         util: {
-            createPage: function(pageData){
+            createPage: function(pageData) {
                 return $('<li>')
-                    .text(pageData)
+                    .html('<a>' + pageData + '</a>')
                     .addClass('waves-effect')
                     .attr('data-page', pageData);
             },
-            createChevron: function(type){
+            createChevron: function(type) {
                 var direction = type === 'next' ? 'right' : 'left';
-                
+
                 var $icon = $('<i>')
                     .addClass('waves-effect')
                     .addClass('material-icons')
                     .text('chevron_' + direction);
-                
+
                 return this.createPage(type).text('')
                     .attr('data-page', type)
                     .append($icon);
             },
             Ellipsis: function() {
                 var $ellipsis = $('<li>');
-                    $ellipsis.text('...');
-                    $ellipsis.addClass('hide disabled');
+                $ellipsis.text('...');
+                $ellipsis.addClass('hide disabled');
                 return {
                     $elem: $ellipsis,
-                    isHidden:   true,
+                    isHidden: true,
                     show: function() {
                         this.isHidden = false;
-                        this.$elem.removeClass('hide');},
+                        this.$elem.removeClass('hide');
+                    },
                     hide: function() {
                         this.isHidden = true;
-                        this.$elem.addClass('hide');}
+                        this.$elem.addClass('hide');
+                    }
                 };
             }
         }
