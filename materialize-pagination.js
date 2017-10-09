@@ -15,9 +15,9 @@
     });  
 */
 ;
-(function($, window, document, undefined) {
+(function ($, window, document) {
 
-    var MaterializePagination = function(elem, options) {
+    var MaterializePagination = function (elem, options) {
         this.$elem = $(elem);
         this.options = options;
         this.$container = null;
@@ -25,20 +25,21 @@
         this.$nextEllipsis = null;
         this.currentPage = null;
         this.visiblePages = [];
-        this.maxVisiblePages = 3;
     };
 
     MaterializePagination.prototype = {
         defaults: {
-            align: 'center',
+            align: 'left',
             lastPage: 1,
             firstPage: 1,
+            maxVisiblePages: 3,
             urlParameter: 'page',
-            useUrlParameter: true,
-            onClickCallback: function() {}
+            useUrlParameter: false,
+            onClickCallback: function () {
+            }
         },
 
-        init: function() {
+        init: function () {
             // Combine defaults with user-specified options
             this.config = $.extend({}, this.defaults, this.options);
             // Get page defined by the urlParameter
@@ -48,7 +49,7 @@
                 this.bindClickEvent();
         },
 
-        createPaginationBase: function(requestedPage) {
+        createPaginationBase: function (requestedPage) {
             if (isNaN(this.config.firstPage) || isNaN(this.config.lastPage)) {
                 console.error('Both firstPage and lastPage attributes need to be integer values');
                 return false;
@@ -58,9 +59,9 @@
             }
             this.config.firstPage = parseInt(this.config.firstPage);
             this.config.lastPage = parseInt(this.config.lastPage);
-            this.currentPage = this.config.firstPage - this.maxVisiblePages;
+            this.currentPage = this.config.firstPage - this.config.maxVisiblePages;
 
-            this.$container = $('<ul>')
+            this.$container = $('<ul style="-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none; -ms-user-select: none; user-select: none;">')
                 .addClass('pagination')
                 .addClass(this.config.align + '-align');
 
@@ -89,18 +90,9 @@
             return true;
         },
 
-        requestPage: function(requestedPage, initing) {
-            switch (requestedPage) {
-                case this.currentPage:
-                    return;
-                case this.currentPage - 1:
-                    this.requestPrevPage();
-                    break;
-                case this.currentPage + 1:
-                    this.requestNextPage();
-                    break;
-                default:
-                    this.requestPageByNumber(requestedPage);
+        requestPage: function (requestedPage, initing) {
+            if (requestedPage !== this.currentPage) {
+                this.requestPageByNumber(requestedPage);
             }
             if (!initing)
                 this.config.onClickCallback(this.currentPage);
@@ -110,68 +102,50 @@
                 this.updateUrlParam(this.config.urlParameter, this.currentPage);
         },
 
-        requestPrevPage: function() {
-            this.currentPage -= 1;
-            this.visiblePages.pop().remove();
-            this.visiblePages.unshift(this.insertPrevPaginationComponent(this.currentPage - 1));
-        },
-
-        requestNextPage: function() {
-            this.currentPage += 1;
-            this.visiblePages.shift().remove();
-            this.visiblePages.push(this.insertNextPaginationComponent(this.currentPage + 1));
-        },
-
-        requestPageByNumber: function(requestedPage) {
+        requestPageByNumber: function (requestedPage) {
             this.purgeVisiblePages();
             this.currentPage = requestedPage;
-            this.visiblePages.push(this.insertNextPaginationComponent(this.currentPage - 1));
-            this.visiblePages.push(this.insertNextPaginationComponent(this.currentPage));
-            this.visiblePages.push(this.insertNextPaginationComponent(this.currentPage + 1));
+            for (var i = this.currentPage - this.config.maxVisiblePages; i < this.currentPage + this.config.maxVisiblePages + 1; i++) {
+                this.visiblePages.push(this.insertNextPaginationComponent(i));
+            }
         },
 
-        renderActivePage: function() {
+        renderActivePage: function () {
             this.renderEllipsis();
             this.$container.find('li.active').removeClass('active');
             var currentPageComponent = $(this.$container.find('[data-page="' + this.currentPage + '"]')[0]);
             currentPageComponent.addClass('active');
         },
 
-        renderEllipsis: function() {
+        renderEllipsis: function () {
             if (this.$prevEllipsis.isHidden &&
-                this.currentPage >= this.config.firstPage + this.maxVisiblePages)
+                this.currentPage > this.config.firstPage + this.config.maxVisiblePages + 1)
                 this.$prevEllipsis.show();
 
             else if (!this.$prevEllipsis.isHidden &&
-                this.currentPage <= this.config.firstPage + this.maxVisiblePages - 1)
+                this.currentPage < this.config.firstPage + this.config.maxVisiblePages + 2)
                 this.$prevEllipsis.hide();
 
             if (this.$nextEllipsis.isHidden &&
-                this.currentPage <= this.config.lastPage - this.maxVisiblePages)
+                this.currentPage < this.config.lastPage - this.config.maxVisiblePages - 1)
                 this.$nextEllipsis.show();
 
             else if (!this.$nextEllipsis.isHidden &&
-                this.currentPage >= this.config.lastPage - this.maxVisiblePages + 1)
+                this.currentPage > this.config.lastPage - this.config.maxVisiblePages - 2)
                 this.$nextEllipsis.hide();
         },
 
-        bindClickEvent: function() {
+        bindClickEvent: function () {
             var self = this;
-            this.$container.on('click', 'li', function() {
-                var requestedPage = self.sanitizePageRequest($(this).data('page'));
-                self.requestPage(requestedPage);
+            this.$container.on('click', 'li', function () {
+                if($(this).data('page') !== undefined) {
+                    var requestedPage = self.sanitizePageRequest($(this).data('page'));
+                    self.requestPage(requestedPage);
+                }
             });
         },
 
-        insertPrevPaginationComponent: function(pageNumber) {
-            if (pageNumber > this.config.firstPage && pageNumber < this.config.lastPage) {
-                var $paginationComponent = this.util.createPage(pageNumber);
-                return $paginationComponent.insertAfter(this.$prevEllipsis.$elem);
-            }
-            return $('');
-        },
-
-        insertNextPaginationComponent: function(pageNumber) {
+        insertNextPaginationComponent: function (pageNumber) {
             if (pageNumber > this.config.firstPage && pageNumber < this.config.lastPage) {
                 var $paginationComponent = this.util.createPage(pageNumber);
                 return $paginationComponent.insertBefore(this.$nextEllipsis.$elem);
@@ -179,37 +153,39 @@
             return $('');
         },
 
-        sanitizePageRequest: function(pageData) {
+        sanitizePageRequest: function (pageData) {
             var requestedPage = this.config.firstPage;
 
             if (pageData === 'prev') {
                 requestedPage =
                     this.currentPage === this.config.firstPage ?
-                    this.currentPage : this.currentPage - 1;
+                        this.currentPage : this.currentPage - 1;
             } else if (pageData === 'next') {
                 requestedPage =
                     this.currentPage === this.config.lastPage ?
-                    this.currentPage : this.currentPage + 1;
+                        this.currentPage : this.currentPage + 1;
             } else if (!isNaN(pageData) &&
                 pageData >= this.config.firstPage &&
                 pageData <= this.config.lastPage) {
                 requestedPage = parseInt(pageData);
+            } else {
+                requestedPage = null;
             }
             return requestedPage;
         },
 
-        purgeVisiblePages: function() {
+        purgeVisiblePages: function () {
             var size = this.visiblePages.length;
             for (var page = 0; page < size; page += 1)
                 this.visiblePages.pop().remove();
         },
 
-        parseUrl: function() {
+        parseUrl: function () {
             var requestedPage = this.getUrlParamByName(this.config.urlParameter) || this.config.firstPage;
             return this.sanitizePageRequest(requestedPage);
         },
 
-        getUrlParamByName: function(name) {
+        getUrlParamByName: function (name) {
             name = name.replace(/[\[\]]/g, "\\$&");
             var url = window.location.href;
             var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
@@ -219,7 +195,7 @@
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
 
-        updateUrlParam: function(key, value) {
+        updateUrlParam: function (key, value) {
             var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
                 urlQueryString = document.location.search,
                 newParam = key + '=' + value,
@@ -238,13 +214,13 @@
         },
 
         util: {
-            createPage: function(pageData) {
+            createPage: function (pageData) {
                 return $('<li>')
                     .html('<a>' + pageData + '</a>')
                     .addClass('waves-effect')
                     .attr('data-page', pageData);
             },
-            createChevron: function(type) {
+            createChevron: function (type) {
                 var direction = type === 'next' ? 'right' : 'left';
 
                 var $icon = $('<i>')
@@ -256,18 +232,18 @@
                     .attr('data-page', type)
                     .append($icon);
             },
-            Ellipsis: function() {
+            Ellipsis: function () {
                 var $ellipsis = $('<li>');
                 $ellipsis.text('...');
                 $ellipsis.addClass('hide disabled');
                 return {
                     $elem: $ellipsis,
                     isHidden: true,
-                    show: function() {
+                    show: function () {
                         this.isHidden = false;
                         this.$elem.removeClass('hide');
                     },
-                    hide: function() {
+                    hide: function () {
                         this.isHidden = true;
                         this.$elem.addClass('hide');
                     }
@@ -277,8 +253,8 @@
     };
 
     MaterializePagination.defaults = MaterializePagination.prototype.defaults;
-    $.fn.materializePagination = function(options) {
-        return this.each(function() {
+    $.fn.materializePagination = function (options) {
+        return this.each(function () {
             new MaterializePagination(this, options).init();
         });
     };
